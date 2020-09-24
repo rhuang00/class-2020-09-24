@@ -48,11 +48,35 @@ sep_new <-
 
 **Prompt:** Which classes had the biggest increases and decreases in undergraduate enrollments between September 1 and September 22? Obviously, you will need to join the two datasets which I have created for you above.
 
+```{r}
+the_data <- inner_join(sep_old, sep_new, 
+                       by = c("name", "id", "title", "department"), 
+                       suffix = c("_old", "_new")) %>% 
+  mutate(difference = (u_grad_new) - (u_grad_old))
+  
+  
+```
+
 a) Make a table using **gt** which shows the five courses with the biggest increase. Use the [How to make a table](https://davidkane9.github.io/PPBDS/tools.html#how-to-make-a-table) section of *The Primer*.
 
+```{r}
+topinc <- the_data %>% 
+  arrange(desc(difference)) %>% 
+  slice_head(n = 5)
+```
+
+
 b) Make a table using **gt** which shows the five courses with the biggest decrease.
+```{r}
+topdec <- the_data %>% 
+  arrange(difference) %>% 
+  slice_head(n = 5)
+```
 
 c) Make a nice looking graphic which shows these 10 courses.
+```{r}
+
+```
 
 d) Write down some thoughts about what might explain these increases and decreases. Or is it all just random? How would we know?
 
